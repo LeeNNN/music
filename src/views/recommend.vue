@@ -1,30 +1,32 @@
 <template>
   	<div class="recommend">
-    	<div class="recommend-content">
-      		<!-- 轮播图 -->
-			<div class="slider-wrapper">
-				<m-slide :sliderList="sliderList"></m-slide>
-			</div>
-      		<!-- 热门歌曲列表 -->
-			<div class="recommend-list" v-if="hotRecomList.length">
-				<h1 class="list-title">热门歌曲推荐</h1>
-				<ul>
-					<li class="item" v-for="(item,index) in hotRecomList" :key="index" :class="[(index+1)%2===1 ? 'p-left' : 'p-right']">
-						<div class="icon">
-							<img :src="item.imgurl" width="160" height="160" class="recom-img">
-						</div>
-						<div class="text">
-							<h2 class="description">{{ item.dissname }}</h2>
-							<p class="name">{{ item.creator.name }}</p>
-						</div>
-					</li>
-				</ul>
-			</div>
-			<!-- loading -->
-			<div class="loading-container" v-show="!hotRecomList.length">
-				<loading></loading>
-			</div>
-    	</div>
+    	<m-scroll class="recommend-content" :data="hotRecomList">
+        <div>
+          <!-- 轮播图 -->
+          <div class="slider-wrapper">
+            <m-slide :sliderList="sliderList"></m-slide>
+          </div>
+          <!-- 热门歌曲列表 -->
+          <div class="recommend-list" v-if="hotRecomList.length">
+            <h1 class="list-title">热门歌曲推荐</h1>
+            <ul>
+              <li class="item" v-for="(item,index) in hotRecomList" :key="index" :class="[(index+1)%2===1 ? 'p-left' : 'p-right']">
+                <div class="icon">
+                  <img :src="item.imgurl" width="160" height="160" class="recom-img">
+                </div>
+                <div class="text">
+                  <h2 class="description">{{ item.dissname }}</h2>
+                  <p class="name">{{ item.creator.name }}</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <!-- loading -->
+          <div class="loading-container" v-show="!hotRecomList.length">
+            <loading></loading>
+          </div>
+        </div>
+    	</m-scroll>
   	</div>
 </template>
 
@@ -33,6 +35,8 @@ import MSlide from "../base/m-slide.vue";
 import { getSliderList,getHotRecom } from "../api/recommend.js";
 import { Data_OK } from "../common/js/config.js";
 import Loading from "../base/loading/loading.vue";
+import MScroll from "../components/m-scroll.vue";
+
 export default {
 	data(){
 		return {
@@ -42,7 +46,8 @@ export default {
 	},
 	components: {
 		MSlide,
-		Loading
+    Loading,
+    MScroll
 	},
 	methods: {
 		_getSliderList(){

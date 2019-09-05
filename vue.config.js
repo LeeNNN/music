@@ -14,6 +14,10 @@ module.exports = {
                         referer: "https://c.y.qq.com",
                         host: "c.y.qq.com"
                     }
+                },
+                "/v8": {
+                    target: "https://c.y.qq.com",
+                    changeOrigin: true
                 }
             }
         }
